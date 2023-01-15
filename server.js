@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
+import itemRoutes from "./routes/itemRoutes.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use((err, req, res, next) => {
   });
 
   app.use("/api/user", userRoutes);
+  app.use("/api/items", itemRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)

@@ -3,8 +3,8 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../utils.js";
 
 export const registerUser = async (payload) => {
+  console.log(payload);
   const newUser = new User({
-    _id: payload.id,
     first_name: payload.first_name,
     last_name: payload.last_name,
     email: payload.email,
