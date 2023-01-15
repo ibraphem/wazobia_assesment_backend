@@ -38,3 +38,24 @@ export const generateToken = (user) => {
     domain: process.env.MAILGUN_DOMIAN,
     
   });
+
+  export const recieptEmailTemplate = (name) => {
+    return `<h3>Payment Reciept</h3>
+    <p>
+    Hi ${name},</p>
+    <p>One morestep to complete your registration. Click the link below to verify your email.</p>
+ 
+    <p>
+    <a href="http://localhost:3000/email/verify">http://localhost:3000/email/verify</a>
+    </p>
+
+    <p>
+    Should you be unable to use the link above, simply copy and paste this link in your browser to verify your email.
+    </p>
+    <p>
+    <a href="http://localhost:3000/email/verify/ruti3p3z2ygnvlberrsz2bb">http://localhost:3000/email/verify/ruti3p3z2ygnvlberrsz2bb</a>
+    </P>
+
+    <p>Regards</p>
+    `;
+  };
