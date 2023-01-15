@@ -1,7 +1,8 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import { registerUser, signIn } from "../controllers/userController.js";
-import { generateToken } from "../utils.js";
+import { registerUser, resendVerificationMail, signIn, verifyEmail } from "../controllers/userController.js";
+import { isAuth } from "../utils.js";
+
 
 const userRoutes = express.Router();
 
@@ -17,6 +18,23 @@ userRoutes.post(
   "/signin",
   expressAsyncHandler(async (req, res) => {
     const result = await signIn(req?.body)
+    res.send(result)
+  })
+);
+
+userRoutes.get(
+  "/resend-verification-mail",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const result = await resendVerificationMail(req.user._id)
+    res.send(result)
+  })
+);
+
+userRoutes.get(
+  "/verify/:code",
+  expressAsyncHandler(async (req, res) => {
+    const result = await verifyEmail(req.params.code)
     res.send(result)
   })
 );

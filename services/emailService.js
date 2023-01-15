@@ -1,14 +1,14 @@
-import { mailgun, recieptEmailTemplate } from "../utils.js";
+import { mailgun, emailVerificationTemplate } from "../utils.js";
 
-export const sendMail = (name, email) => {
+export const sendVerificationMail = (name, email, link) => {
     mailgun()
     .messages()
     .send(
       {
-        from: 'WazobiaAssessment <assessment@wazobia.com>',
+        from: 'Wazobia <assessment@wazobia.com>',
         to: `${name} <${email}>`,
         subject: `Wazobia Assesment: Verify your Email`,
-        html: recieptEmailTemplate(name),
+        html: emailVerificationTemplate(name, link),
       },
       (error, body) => {
         if (error) {
