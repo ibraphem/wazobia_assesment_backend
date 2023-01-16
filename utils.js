@@ -49,7 +49,8 @@ export const mailgun = () =>
     domain: process.env.MAILGUN_DOMIAN,
   });
 
-export const siteUrl = "http://localhost:3000";
+// export const siteUrl = "http://localhost:3000";
+export const siteUrl = "https://wazobia-assessment.netlify.app"
 
 export const emailVerificationTemplate = (name, link) => {
   return `<h3>Wazobia: Verify Email</h3>
