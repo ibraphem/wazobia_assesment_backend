@@ -9,7 +9,7 @@ export const generateToken = (user) => {
       last_name: user.last_name,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "30d" }
+    { expiresIn: "3d" }
   );
 };
 
