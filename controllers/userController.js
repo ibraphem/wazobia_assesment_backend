@@ -44,6 +44,7 @@ export const signIn = async (payload) => {
   try {
     const user = await User.findOne({ email: payload?.email });
     if (user) {
+    
       if (bcrypt.compareSync(payload?.password, user.password)) {
         return {
           status: true,
@@ -57,7 +58,7 @@ export const signIn = async (payload) => {
               emailVerificationStatus: user?.emailVerificationStatus,
               emailVerificationDate: user.emailVerificationDate,
             },
-            token: generateToken(result),
+            token: generateToken(user),
           },
         };
       } else {
@@ -75,23 +76,34 @@ export const verifyEmail = async (code) => {
   try {
     const user = await User.findOne({ verificationCode: code });
     if (user) {
-      user.emailVerificationStatus = true;
-      user.emailVerificationDate = new Date();
-      const updatedUser = await user.save();
-      return {
-        status: true,
-        message: "Email verified successfully",
-        data: {
-          user: {
-            _id: updatedUser.id,
-            first_name: updatedUser.first_name,
-            last_name: updatedUser.last_name,
-            email: updatedUser.email,
-            emailVerificationStatus: updatedUser?.emailVerificationStatus,
-            emailVerificationDate: updatedUser.emailVerificationDate,
+      if(user.emailVerificationStatus === false){
+
+        user.emailVerificationStatus = true;
+        user.emailVerificationDate = new Date();
+        const updatedUser = await user.save();
+        return {
+          status: true,
+          message: "Email verified successfully",
+          data: {
+            user: {
+              _id: updatedUser.id,
+              first_name: updatedUser.first_name,
+              last_name: updatedUser.last_name,
+              email: updatedUser.email,
+              emailVerificationStatus: updatedUser?.emailVerificationStatus,
+              emailVerificationDate: updatedUser.emailVerificationDate,
+            },
           },
-        },
-      };
+        };
+
+      }else{
+        return {
+          status: true,
+          message: "This email has already being verified",
+          data: null,
+        };
+      }
+     
     } else {
       return {
         status: false,

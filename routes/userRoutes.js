@@ -17,7 +17,8 @@ userRoutes.post(
 userRoutes.post(
   "/signin",
   expressAsyncHandler(async (req, res) => {
-    const result = await signIn(req?.body)
+    const result = await signIn(req?.body);
+    console.log('result', result);
     res.send(result)
   })
 );
