@@ -1,6 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import { deleteItem, saveItem, updateItem, userItems } from "../controllers/itemController.js";
+import { uploads } from "../services/uploadService.js";
 import { isAuth } from "../utils.js";
 
 const itemRoutes = express.Router();
@@ -46,16 +47,15 @@ itemRoutes.get(
     })
   );
 
-  // itemRoutes.get(
-  //   '/mail',
-  //   isAuth,
-  //   expressAsyncHandler(async (req, res) => {
-  //     let verificationToken = generateVerificationToken(req.user._id)
-  //     let link = `${siteUrl}/email/verify/${verificationToken}`
-  //    const result = await sendMail(req.user.first_name, req?.user?.email, link)
-  //    res.send(result);
+  itemRoutes.post(
+    '/upload',
+    expressAsyncHandler(async (req, res) => {
+     const result = await uploads(req.body, res)
+     res.send(result);
 
-  //   })
-  // );
+    })
+  );
+
+
 
 export default itemRoutes;
